@@ -10,3 +10,9 @@ convertButton.addEventListener('click', function () {
   let result = amount * 1.45; // تحويل الدينار الى دولار
   document.getElementById('result').innerText = result.toFixed(2) + ' $';
 });
+// اضافة حدث عند الضغط على زر Enter في حقل الإدخال
+amot.addEventListener('keypress', function (event) {
+  if (event.key === 'Enter') {
+    convertButton.click();
+  }
+});
