@@ -1,0 +1,86 @@
+body {
+  font-family: 'Cairo', Tahoma, Arial, sans-serif;
+  background: #e0e5ec;
+  direction: rtl;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 24px;
+}
+.neumorphic-card {
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow: 8px 8px 16px #babecc, -8px -8px 16px #fff;
+  padding: 32px 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+input,
+button,
+select {
+  font-size: 1.1em;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin: 8px 0;
+  background: #e0e5ec;
+  box-shadow: inset 2px 2px 6px #babecc, inset -2px -2px 6px #fff;
+  transition: box-shadow 0.2s;
+}
+input:focus,
+button:active {
+  box-shadow: 2px 2px 8px #babecc, -2px -2px 8px #fff;
+}
+button {
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+.navbar {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.nav-btn {
+  background: #e0e5ec;
+  box-shadow: 4px 4px 8px #babecc, -4px -4px 8px #fff;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-btn.active,
+.nav-btn:hover {
+  background: #d1d9e6;
+}
+.section {
+  background: #e0e5ec;
+  border-radius: 18px;
+  box-shadow: 6px 6px 12px #babecc, -6px -6px 12px #fff;
+  padding: 24px;
+  min-height: 300px;
+}
+.error {
+  color: #c00;
+  margin-top: 10px;
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 8px;
+  }
+  .section {
+    padding: 10px;
+    min-height: 180px;
+  }
+  .navbar {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

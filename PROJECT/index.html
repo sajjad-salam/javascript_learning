@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نظام نقاط البيع والمحاسبة</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <div id="app" class="container">
+      <!-- شاشة تسجيل الدخول -->
+      <div id="login-screen" class="neumorphic-card">
+        <h2>تسجيل الدخول</h2>
+        <input
+          type="password"
+          id="admin-password"
+          placeholder="كلمة المرور"
+          autocomplete="off"
+        />
+        <button id="login-btn">دخول</button>
+        <div id="login-error" class="error"></div>
+      </div>
+      <!-- الواجهة الرئيسية -->
+      <div id="main-ui" style="display: none">
+        <nav class="navbar">
+          <button class="nav-btn" data-section="pos">
+            <i class="bi bi-cash"></i> نقطة البيع
+          </button>
+          <button class="nav-btn" data-section="products">
+            <i class="bi bi-box"></i> المنتجات
+          </button>
+          <button class="nav-btn" data-section="customers">
+            <i class="bi bi-people"></i> العملاء
+          </button>
+          <button class="nav-btn" data-section="reports">
+            <i class="bi bi-graph-up"></i> التقارير
+          </button>
+          <button class="nav-btn" data-section="settings">
+            <i class="bi bi-gear"></i> الإعدادات
+          </button>
+          <button id="logout-btn">
+            <i class="bi bi-box-arrow-right"></i> خروج
+          </button>
+        </nav>
+        <section id="section-pos" class="section">
+          <h3>نقطة البيع</h3>
+          <div class="neumorphic-card" style="margin-bottom: 16px">
+            <input
+              type="text"
+              id="pos-search"
+              placeholder="بحث بالاسم أو الباركود أو المسح السريع"
+              style="width: 60%"
+            />
+            <button id="pos-add-barcode" title="إضافة بالباركود">
+              <i class="bi bi-upc-scan"></i>
+            </button>
+          </div>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap">
+            <div style="flex: 2; min-width: 220px">
+              <h4>المنتجات</h4>
+              <div
+                id="pos-products-list"
+                style="max-height: 220px; overflow-y: auto"
+              ></div>
+            </div>
+            <div style="flex: 3; min-width: 260px">
+              <h4>سلة المشتريات</h4>
+              <table style="width: 100%; text-align: center">
+                <thead>
+                  <tr>
+                    <th>المنتج</th>
+                    <th>الكمية</th>
+                    <th>السعر</th>
+                    <th>الإجمالي</th>
+                    <th>حذف</th>
+                  </tr>
+                </thead>
+                <tbody id="pos-cart-body">
+                  <!-- عناصر السلة -->
+                </tbody>
+              </table>
+              <div style="margin-top: 10px; text-align: left">
+                <span>الإجمالي: </span><span id="pos-total">0</span> ريال
+              </div>
+              <button id="pos-checkout" style="margin-top: 10px">
+                إصدار فاتورة وطباعتها
+              </button>
+              <div
+                id="pos-invoice"
+                style="display: none; margin-top: 16px"
+              ></div>
+            </div>
+          </div>
+        </section>
+        <section id="section-products" class="section" style="display: none">
+          <h3>إدارة المنتجات</h3>
+          <form id="product-form" class="neumorphic-card" autocomplete="off">
+            <input type="hidden" id="product-id" />
+            <div style="display: flex; gap: 10px; flex-wrap: wrap">
+              <input
+                type="text"
+                id="product-name"
+                placeholder="اسم المنتج"
+                required
+                style="flex: 2"
+              />
+              <input
+                type="text"
+                id="product-category"
+                placeholder="التصنيف"
+                style="flex: 1"
+              />
+              <input
+                type="text"
+                id="product-barcode"
+                placeholder="الباركود"
+                style="flex: 1"
+              />
+              <input
+                type="number"
+                id="product-price"
+                placeholder="السعر"
+                min="0"
+                step="0.01"
+                required
+                style="flex: 1"
+              />
+              <input
+                type="number"
+                id="product-stock"
+                placeholder="المخزون"
+                min="0"
+                step="1"
+                required
+                style="flex: 1"
+              />
+              <button type="submit" id="save-product">حفظ المنتج</button>
+              <button type="button" id="reset-product">إلغاء</button>
+            </div>
+          </form>
+          <div
+            style="margin: 16px 0; display: flex; gap: 10px; flex-wrap: wrap"
+          >
+            <input
+              type="text"
+              id="search-product"
+              placeholder="بحث بالاسم أو الباركود"
+              style="flex: 2"
+            />
+            <select id="filter-category" style="flex: 1">
+              <option value="">كل التصنيفات</option>
+            </select>
+          </div>
+          <div style="overflow-x: auto">
+            <table id="products-table" style="width: 100%; text-align: center">
+              <thead>
+                <tr>
+                  <th>الاسم</th>
+                  <th>التصنيف</th>
+                  <th>الباركود</th>
+                  <th>السعر</th>
+                  <th>المخزون</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- المنتجات ستظهر هنا -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="section-customers" class="section" style="display: none">
+          <h3>إدارة العملاء</h3>
+          <form id="customer-form" class="neumorphic-card" autocomplete="off">
+            <input type="hidden" id="customer-id" />
+            <div style="display: flex; gap: 10px; flex-wrap: wrap">
+              <input
+                type="text"
+                id="customer-name"
+                placeholder="اسم العميل"
+                required
+                style="flex: 2"
+              />
+              <input
+                type="text"
+                id="customer-phone"
+                placeholder="رقم الجوال"
+                style="flex: 1"
+              />
+              <input
+                type="text"
+                id="customer-email"
+                placeholder="البريد الإلكتروني"
+                style="flex: 2"
+              />
+              <button type="submit" id="save-customer">حفظ العميل</button>
+              <button type="button" id="reset-customer">إلغاء</button>
+            </div>
+          </form>
+          <div
+            style="margin: 16px 0; display: flex; gap: 10px; flex-wrap: wrap"
+          >
+            <input
+              type="text"
+              id="search-customer"
+              placeholder="بحث بالاسم أو الجوال"
+              style="flex: 2"
+            />
+          </div>
+          <div style="overflow-x: auto">
+            <table id="customers-table" style="width: 100%; text-align: center">
+              <thead>
+                <tr>
+                  <th>الاسم</th>
+                  <th>الجوال</th>
+                  <th>البريد الإلكتروني</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- العملاء سيظهرون هنا -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="section-reports" class="section" style="display: none">
+          <h3>التقارير</h3>
+          <div class="neumorphic-card" style="margin-bottom: 16px">
+            <label>عرض التقارير حسب:</label>
+            <select id="report-type">
+              <option value="daily">يومي</option>
+              <option value="weekly">أسبوعي</option>
+            </select>
+            <input type="date" id="report-date" />
+            <button id="show-report">عرض التقرير</button>
+          </div>
+          <div id="sales-report" style="margin-bottom: 24px"></div>
+          <div class="neumorphic-card" style="margin-bottom: 16px">
+            <h4>تسجيل مصروف</h4>
+            <form
+              id="expense-form"
+              autocomplete="off"
+              style="display: flex; gap: 10px; flex-wrap: wrap"
+            >
+              <input
+                type="text"
+                id="expense-desc"
+                placeholder="وصف المصروف"
+                required
+                style="flex: 2"
+              />
+              <input
+                type="number"
+                id="expense-amount"
+                placeholder="المبلغ"
+                min="0"
+                step="0.01"
+                required
+                style="flex: 1"
+              />
+              <button type="submit">إضافة</button>
+            </form>
+          </div>
+          <div id="expenses-report"></div>
+        </section>
+        <section id="section-settings" class="section" style="display: none">
+          <h3>الإعدادات (تصدير / استيراد البيانات)</h3>
+          <div class="neumorphic-card" style="margin-bottom: 16px">
+            <button id="export-data">
+              <i class="bi bi-download"></i> تصدير جميع البيانات
+            </button>
+            <input
+              type="file"
+              id="import-file"
+              accept="application/json"
+              style="display: none"
+            />
+            <button id="import-data">
+              <i class="bi bi-upload"></i> استيراد بيانات
+            </button>
+          </div>
+          <div id="settings-msg" style="color: #c00; margin-top: 10px"></div>
+        </section>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
