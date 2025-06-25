@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- <script src="main.js"></script> -->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test</title>
+    <style>
+      .product-form {
+        margin-bottom: 20px;
+      }
+
+      .product-list {
+        margin-top: 20px;
+      }
+
+      .product-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .total {
+        font-weight: bold;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        text-align: center;
+      }
+      .product-form input {
+        margin: 5px;
+        padding: 10px;
+        width: 200px;
+      }
+      .product-form button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #28a745;
+        color: white;
+      }
+      .product-list ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      .product-list li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+      .product-list button {
+        margin-top: 10px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #dc3545;
+        color: white;
+      }
+      .product-item h2 {
+        margin: 5px 0;
+      }
+      .product-item span {
+        display: inline-block;
+        width: 100px;
+      }
+      .product-item button {
+        margin: 5px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+      }
+      .product-item button:hover {
+        background-color: #0056b3;
+      }
+      .product-item button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .product-item button:disabled:hover {
+        background-color: #ccc;
+      }
+      /* make the product items as a table  */
+      .product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .product-item h2 {
+        margin: 0;
+      }
+      .product-item span {
+        flex: 1;
+        text-align: center;
+      }
+      .product-item button {
+        flex: 0 0 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>مشروع ادارة منتجات</h1>
+    <div class="product-form">
+      <input type="text" id="productName" placeholder="اسم المنتج" />
+      <input type="number" id="productPrice" placeholder="سعر المنتج" />
+      <input type="number" placeholder="الضرائب" id="productTax" />
+      <input type="number" placeholder="الخصم" id="productDiscount" />
+      <input type="number" placeholder="الكمية" id="productQuantity" />
+      <input type="number" placeholder="الاعلانات" id="productAds" />
+      <!-- السعر الكلي لايتم احتسابه الى اذا تم ادخال سعر المنتج والضرائب والخصم -->
+      <h2>السعر الكلي <span id="totalPrice">0</span></h2>
+      <button id="addProduct">اضافة منتج</button>
+    </div>
+    <div class="product-list">
+      <h2>قائمة المنتجات</h2>
+      <button id="clearProducts">مسح المنتجات</button>
+      <!-- قائمة بالمنتجات الموجودة -->
+      <div class="product-item">
+        <h2>تسلسل</h2>
+        <span id="item1">1</span>
+        <h2>اسم المنتج</h2>
+        <span id="nameproduct">اسم المنتج</span>
+        <h2>السعر</h2>
+        <span id="itemPrice">0</span>
+        <h2>الضرائب</h2>
+        <span id="itemTax">0</span>
+        <h2>الخصم</h2>
+        <span id="itemDiscount">0</span>
+        <h2>الاعلانات</h2>
+        <span id="itemAds">0</span>
+        <h2>الكمية</h2>
+        <span id="itemQuantity">0</span>
+      </div>
+      <!-- update button -->
+      <button id="updateProduct">تعديل منتج</button>
+      <!-- delete button -->
+      <button id="deleteProduct">حذف منتج</button>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
